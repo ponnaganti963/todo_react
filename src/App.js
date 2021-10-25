@@ -3,27 +3,27 @@ import React, { useState, useEffect } from 'react';
 import {Button, FormControl, Input , InputLabel, List, Select ,MenuItem} from '@mui/material';
 import Todo from './Todo';
 import db from './firebase';
-import firebase from 'firebase';
 
 function App() {
   const [todos, setTodos] = useState([]);
   const [input,setInput] = useState('');
   const [order,setorder] = useState('desc')
-  
+
   useEffect(() => {
     db.collection('todos').orderBy('timestamp',order).onSnapshot(snapshot =>{
-      setTodos(snapshot.docs.map(doc => ({id: doc.id ,todo: doc.data().todo,completed : doc.data().completed})))
+      setTodos(snapshot.docs.map(doc => ({id: doc.id ,_todo: doc.data()})))
     })
-  }, [order,input])
+  }, [order])
 
   const add_todo = (event) =>{ 
     event.preventDefault();
     db.collection('todos').add({
       todo: input,
       completed: false,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      timestamp: Date.now()
     })
-    setTodos([...todos,input]);
+    // firebase.firestore.FieldValue.serverTimestamp() --> timestamp in firebase
+    // setTodos([...todos,input]);
     setInput('');
    } 
   return (
@@ -39,8 +39,8 @@ function App() {
           onChange={ event => setorder(event.target.value) }
           label="Sort"
         >
-          <MenuItem value={'asc'}>Ascending order</MenuItem>
-          <MenuItem value={'desc'}>Descending order</MenuItem>
+          <MenuItem value={'asc'}>Oldest on Top</MenuItem>
+          <MenuItem value={'desc'}>Newest on Top</MenuItem>
         </Select>
       </FormControl>
       <form>
@@ -52,8 +52,8 @@ function App() {
       </form>
       </div>
       <List className='list'>
-        {todos.map((todo,index)=>(
-            <Todo todo={todo} key= {index}/>
+        {todos.map((todo)=>(
+            <Todo todo_item={todo} key= {todo?.id}/>
         ))}
         
       </List>
