@@ -28,7 +28,7 @@ function App() {
    } 
   return (
     <div className="App">
-      <h1>My New TO-DO APP</h1>
+      <h1>TO-DO APP 🚀</h1>
       <div className='wrapper'>
       <FormControl className='drop_down' variant="standard" sx={{ m: 1, minWidth: 120 }}>
         <InputLabel id="demo-simple-select-standard-label">Sort</InputLabel>
