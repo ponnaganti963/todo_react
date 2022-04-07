@@ -1,3 +1,23 @@
-.todo_list{
-    text-align: center;
+.list_items:nth-child(odd){
+    background: rgb(247, 248, 250);
+}
+.list_items:hover{
+    transition: 0.7s ease-in-out ;
+    background: rgb(185, 219, 238);
+}
+.list_items:nth-child(even){
+     background: rgb(217, 219, 217);
+}
+  
+.list_items{
+    margin: 2px 0;
+    border-radius: 10px;
+}
+
+.strike{
+    text-decoration: line-through;
+}
+
+.edit{
+    margin: 10px;
 }
